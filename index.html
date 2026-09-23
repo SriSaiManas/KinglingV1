@@ -816,17 +816,9 @@
 
   // ---------- local device persistence ----------
   async function api(path, options = {}){
-    const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
-    if(currentUser){
-      const account = ACCOUNTS.find(acc => acc.username === currentUser.username);
-      if(account){
-        headers['X-Kindling-Username'] = account.username;
-        headers['X-Kindling-Password'] = account.password;
-      }
-    }
     const res = await fetch(path, {
-      ...options,
-      headers
+      headers: { 'Content-Type': 'application/json' },
+      ...options
     });
     const data = await res.json().catch(() => ({}));
     if(!res.ok) throw new Error(data.error || 'Request failed');
