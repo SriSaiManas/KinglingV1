@@ -1085,14 +1085,12 @@ async function api(path, options = {}){
       closeComposeModal();
       showToast('Published.');
       document.getElementById('feed').scrollIntoView({behavior:'smooth', block:'start'});
-    }catch(e){
-      console.error(e);
-      articles.unshift(article);
-      saveArticles();
-      render();
-      closeComposeModal();
-      showToast('Saved to this browser.');
-    }
+  }catch(e){
+    console.error(e);
+    composeError.textContent = 'Could not publish: ' + e.message;
+    composeError.classList.add('show');
+    showToast('Publish failed.');
+  }
   });
 
   // ---------- delete flow ----------
